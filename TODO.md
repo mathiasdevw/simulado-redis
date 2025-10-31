@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Redis Simulado - TODO List
 
 ## Completed Tasks
@@ -35,3 +36,6 @@
 - Scores table needs to be created in Supabase with columns: id (auto-increment), name (text), score (integer), percentage (float), timestamp (timestamp)
 - Questions: 6 Strings, 9 Lists, 9 Sets, 6 ZSets, total 30
 - Text input questions: 5,10,15,20,25,30 (cite commands or concepts)
+=======
+
+>>>>>>> origin/main
