@@ -1,0 +1,17 @@
+{
+  "name": "simulado-redis-interativo",
+  "version": "1.0.0",
+  "description": "Simulado interativo de 30 questões sobre Redis",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "build": "echo 'No build step required'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": ["redis", "quiz", "simulado", "interativo"],
+  "author": "Seu Nome",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ranking Simulado Redis</title>
+  <style>
+    :root{--bg:#2e003e;--card:#6a1b9a;--accent:#ba68c8;--text:#ffffff}
+    body{margin:0;font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,var(--bg),#03131a);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .container{width:900px;max-width:100%;background:var(--card);border-radius:14px;padding:28px;box-shadow:0 10px 30px rgba(2,10,20,.6)}
+    h1{margin:0;font-size:20px;color:var(--accent)}
+    table{width:100%;border-collapse:collapse;margin-top:20px}
+    th,td{padding:10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.1)}
+    th{color:var(--accent)}
+    .loading{text-align:center;padding:20px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ranking Simulado Redis</h1>
+    <p>Top pontuações dos simulados.</p>
+    <div id="ranking" class="loading">Carregando...</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseUrl = 'https://cptjkajmrsftwuxcysoe.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNwdGprYWptcnNmdHd1eGN5c29lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5MjY0OTgsImV4cCI6MjA3NzUwMjQ5OH0.6nVpZSAVhrThZrDcWfJnZJtcImDv78n9VhPYljsFUH0';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function loadRanking(){
+      try {
+        const { data, error } = await supabase.from('scores').select('*').order('percentage', { ascending: false }).limit(10);
+        if(error) throw error;
+        let html = '<table><tr><th>Nome</th><th>Pontuação</th><th>Porcentagem</th><th>Data</th></tr>';
+        data.forEach(row => {
+          html += `<tr><td>${row.name}</td><td>${row.score}/30</td><td>${row.percentage}%</td><td>${new Date(row.created_at).toLocaleDateString()}</td></tr>`;
+        });
+        html += '</table>';
+        document.getElementById('ranking').innerHTML = html;
+      } catch (err) {
+        document.getElementById('ranking').innerHTML = 'Erro ao carregar ranking: ' + err.message;
+      }
+    }
+
+    loadRanking();
+  </script>
+</body>
+</html>
